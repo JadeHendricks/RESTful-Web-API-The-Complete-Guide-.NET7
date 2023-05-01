@@ -9,6 +9,7 @@ namespace MagicVilla_VillaAPI.Controllers
     //ControllerBase for API, Controller for views and MVC extra features that we don't need
     //using [controller] inside of route will automatically use the className - "controller" if you want to do that.
     [Route("api/VillaAPI")]
+    //this allows us to use see the model requirements aswell
     [ApiController]
     public class VillaAPIController : ControllerBase
     {
@@ -51,6 +52,13 @@ namespace MagicVilla_VillaAPI.Controllers
             if (villaDTO == null)
             {
                 return BadRequest(villaDTO);
+            }
+
+            //creating custom errors
+            if (VillaStore.villaList.FirstOrDefault(u => u.Name.ToLower() == villaDTO.Name.ToLower()) != null)
+            {
+                ModelState.AddModelError("CustomError", "Villa already Exists");
+                return BadRequest(ModelState);
             }
 
             if (villaDTO.Id > 0)
