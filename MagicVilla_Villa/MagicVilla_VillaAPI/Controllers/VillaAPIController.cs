@@ -1,4 +1,5 @@
-﻿using MagicVilla_VillaAPI.Models;
+﻿using MagicVilla_VillaAPI.Data;
+using MagicVilla_VillaAPI.Models.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,14 +11,18 @@ namespace MagicVilla_VillaAPI.Controllers
     [ApiController]
     public class VillaAPIController : ControllerBase
     {
+        //If you do not add the HttpGet, then this will be the default anyways
         [HttpGet]
-        public IEnumerable<Villa> GetVillas()
+        public IEnumerable<VillaDTO> GetVillas()
         {
-            return new List<Villa>
-            {
-                new Villa { Id = 1, Name = "Pool View" },
-                new Villa { Id = 2, Name = "Beach View" }
-            };
+            return VillaStore.villaList;
+        }
+
+        //If you do not add the HttpGet, then this will be the default anyways
+        [HttpGet("{id:int}")]
+        public VillaDTO GetVilla(int id)
+        {
+            return VillaStore.villaList.FirstOrDefault(u => u.Id == id);
         }
     }
 }
