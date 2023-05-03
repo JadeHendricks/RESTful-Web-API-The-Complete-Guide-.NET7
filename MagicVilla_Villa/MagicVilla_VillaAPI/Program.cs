@@ -1,4 +1,5 @@
 //logging is already registered here for us automatically - DI
+using MagicVilla_VillaAPI;
 using MagicVilla_VillaAPI.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
 });
+
+builder.Services.AddAutoMapper(typeof(MappingConfig));
+
 //AddNewtonsoftJson adding this for the api to allow PUT endpoint fallbacks
 //ReturnHttpNotAcceptable only allows data in a format our api accepts
 builder.Services.AddControllers(option => {
